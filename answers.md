@@ -38,6 +38,61 @@ violation of this assumption is to identify unlabeled sample which are too far
 from identified distributions / clusters / etc. and using our experts to
 properly classify them.
 
+Results
+==============================================================================
+
+In general, semi-supervised learning with the high-dimensional large text
+dataset proved to be futile. The RandomForestClassifier trained on 1% of the
+dataset (~400 samples) performed better on the held out test set than both the
+graph Laplacian model and the self-trained RandomForestClassifier. The high-
+dimensionality of this dataset is likely the cause for the experienced training
+difficulty -- as a result, I'm also listing the evaluation of models trained on
+various shuffled partions of the Iris dataset.
+
+Semi-supervised learning with custom dataset (> 44,000 text documents and > 55,000 features):
+------------------------------------------------------------------------------
+
+Base model (RandomForestClassifier) accuracy: 0.5382395382395382
+Self-trained model accuracy: 0.1091871091871092
+Graph Laplacian (LabelPropagation) model accuracy: 0.43722943722943725
+
+As mentioned above, the custom dataset used during the duration of the
+challenge made for difficult semi-supervised learning...to demonstrate the
+effectiveness of the graph Laplacian model, I've repeated the experimentation
+process again using the Iris dataset with various random shufflings of the
+labeled/unlabeled/test partions. Below are the results of four shufflings. In
+all cases, the LabelSpreading classifier (i.e. normalized graph Laplacian)
+performed best. In only one instance did self-training produce a model that
+improved upon the base classifier.
+
+Semi-supervised learning with Iris dataset (shuffle instance 1):
+------------------------------------------------------------------------------
+
+Base model (RandomForestClassifier) accuracy: 0.8604651162790697
+Self-trained model accuracy: 0.6511627906976745
+Graph Laplacian model (LabelSpreading) accuracy: 0.9069767441860465
+
+Semi-supervised learning with Iris dataset (shuffle instance 2):
+------------------------------------------------------------------------------
+
+Base model (KNeighborsClassifer) accuracy: 0.8372093023255814
+Self-trained model accuracy: 0.8604651162790697
+Graph Laplacian (LabelSpreading) model accuracy: 0.8604651162790697
+
+Semi-supervised learning with Iris dataset (shuffle instance 3):
+------------------------------------------------------------------------------
+
+Base model (DecisionTreeClassifier) accuracy: 0.7674418604651163
+Self-trained model accuracy: 0.7674418604651163
+Graph Laplacian (LabelSpreading) model accuracy: 0.9069767441860465
+
+Semi-supervised learning with Iris dataset (shuffle instance 4):
+------------------------------------------------------------------------------
+
+Base model (RandomForestClassifier) accuracy: 0.7441860465116279
+Self-trained model accuracy: 0.5813953488372093
+Graph Laplacian (LabelSpreading) model accuracy: 0.9302325581395349
+
 (1) Is your system scalable w.r.t. size of your dataset? If not, how would
 ------------------------------------------------------------------------------
 address the scalability (in terms of algorithms, infrastructure, or both)?
